@@ -42,3 +42,10 @@ jobs:
           context: .
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/product-api:latest
+  deploy-local:
+    needs: cd
+    runs-on: self-hosted
+    steps:
+      - uses: actions/checkout@v4
+      - run: docker compose -f docker-compose-prod.yaml pull
+      - run: docker compose -f docker-compose-prod.yaml up -d
